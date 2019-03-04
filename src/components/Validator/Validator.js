@@ -1,29 +1,40 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
-import { initiateValidation } from "../../actions/Validator.js";
+import { validatorFetch } from "../../actions/Validator.js";
 
 class Validator extends Component {
   handleOnClick(number) {
-    this.props.initiateValidation(number);
+    this.props.validatorFetch(number);
   }
 
   render() {
     const number = this.props.task.source.attributes.caller;
     return (
-      <button onClick={() => this.handleOnClick(number)}>{this.props.attempted === false ? "Validate User" : this.props.success === true ? "Validation was successful" : "Validation Failed."}</button>
+      <React.Fragment>
+        <button onClick={() => this.handleOnClick(number)}>Click to fetch a new random boolean</button>
+
+        {!this.props.attempted && this.props.isLoading && <p>Loading....</p>}
+
+        {this.props.attempted && !this.props.isLoading && this.props.success && <p>Result = true! Validation was successful</p>}
+
+        {this.props.attempted && !this.props.isLoading && !this.props.success && this.props.error && <p style={{ color: "red" }}>{this.props.error}</p>}
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => {
+  console.log(state.verify);
   return {
     success: state.verify.success,
-    attempted: state.verify.attempted
+    attempted: state.verify.attempted,
+    isLoading: state.verify.isLoading,
+    error: state.verify.error
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  initiateValidation: number => dispatch(initiateValidation(number))
+  validatorFetch: number => dispatch(validatorFetch(number))
 });
 
 export default connect(
