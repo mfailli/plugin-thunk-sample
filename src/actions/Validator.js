@@ -1,6 +1,6 @@
-export const validatorIsApproving = () => {
+export const validatorIsLoading = () => {
   return {
-    type: "VALIDATOR_IS_APPROVING"
+    type: "VALIDATOR_IS_LOADING"
   };
 };
 
@@ -26,7 +26,7 @@ export function validatorFetch(number) {
 
   return dispatch => {
     try {
-      dispatch(validatorIsApproving());
+      dispatch(validatorIsLoading());
 
       fetch(serviceURL) //, { method: "POST" }
         .then(response => {

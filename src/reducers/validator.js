@@ -7,7 +7,7 @@ const defaultAppState = {
 
 export function verify(state = defaultAppState, action) {
   switch (action.type) {
-    case "VALIDATOR_IS_APPROVING":
+    case "VALIDATOR_IS_LOADING":
       return { ...state, attempted: false, isLoading: true, success: false, error: null };
     case "VALIDATOR_SUCCESS":
       return { ...state, attempted: true, isLoading: false, success: action.payload };
